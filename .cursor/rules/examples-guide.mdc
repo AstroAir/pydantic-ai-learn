@@ -1,0 +1,17 @@
+---
+globs: examples/**/*.py
+---
+# Examples Guide
+
+Run examples directly with Python. Useful entry points:
+
+- Basics: [examples/basic/hello_world.py](mdc:examples/basic/hello_world.py), [examples/basic/streaming_iter.py](mdc:examples/basic/streaming_iter.py)
+- Tools: [examples/tools/filesystem_tools_example.py](mdc:examples/tools/filesystem_tools_example.py), [examples/tools/bash_tool_example.py](mdc:examples/tools/bash_tool_example.py)
+- Code Agent: [examples/code_agent/code_agent_example.py](mdc:examples/code_agent/code_agent_example.py)
+- Messages: [examples/messages/run_result_messages.py](mdc:examples/messages/run_result_messages.py), [examples/messages/streamed_run_result_messages.py](mdc:examples/messages/streamed_run_result_messages.py)
+- Output: [examples/output/tool_output.py](mdc:examples/output/tool_output.py), [examples/output/box_or_error.py](mdc:examples/output/box_or_error.py)
+
+Conventions:
+- Each example is self-contained and runnable as `python <path>`
+- Some examples stream output; prefer a terminal that supports ANSI
+- For Windows, prefer PowerShell for shell-related examples

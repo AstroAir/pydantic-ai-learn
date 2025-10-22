@@ -1,0 +1,57 @@
+# Pre-commit hooks configuration for pydantic-ai-learn
+# See https://pre-commit.com for more information
+
+repos:
+  # Standard pre-commit hooks for file hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+      - id: end-of-file-fixer
+        name: Fix end of files
+      - id: check-yaml
+        name: Check YAML syntax
+      - id: check-toml
+        name: Check TOML syntax
+      - id: check-added-large-files
+        name: Check for large files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+      - id: mixed-line-ending
+        name: Fix mixed line endings
+        args: ['--fix=lf']
+
+  # Ruff - Fast Python linter and formatter
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.1
+    hooks:
+      # Run the linter with auto-fix
+      - id: ruff-check
+        name: Ruff linter
+        args: [--fix]
+        types_or: [python, pyi]
+      # Run the formatter
+      - id: ruff-format
+        name: Ruff formatter
+        types_or: [python, pyi]
+
+  # MyPy - Static type checker
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.14.1
+    hooks:
+      - id: mypy
+        name: MyPy type checker
+        # Only check main source directories, not tests/examples (as per existing lint scripts)
+        files: ^(code_agent|tools|utils)/.*\.py$
+        # Add dependencies that mypy needs to check imports
+        additional_dependencies:
+          - types-pyyaml>=6.0.12.20250915
+          - pydantic>=2.0
+          - pydantic-ai>=1.0
+          - trio>=0.31.0
+        args:
+          - --config-file=pyproject.toml
+          - --show-error-codes
+          - --pretty

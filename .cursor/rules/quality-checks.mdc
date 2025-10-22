@@ -1,0 +1,25 @@
+---
+alwaysApply: true
+---
+# Testing and Quality Checks
+
+Use these commands for local verification:
+
+```bash
+python scripts/run_all_checks.py
+python scripts/check_circular_deps.py
+mypy code_agent --strict
+ruff check .
+pytest -q
+```
+
+Helpful targets:
+- Run specific tests: `pytest tests/test_filesystem_tools.py -v`
+- With coverage: `pytest --cov=code_agent --cov=tools --cov=utils`
+
+References:
+- Run all checks: [scripts/run_all_checks.py](mdc:scripts/run_all_checks.py)
+- Circular deps: [scripts/check_circular_deps.py](mdc:scripts/check_circular_deps.py)
+- Top-level tests: [tests/](mdc:tests)
+- Code Agent tests: [code_agent/tests/](mdc:code_agent/tests)
+- Config (mypy/ruff): [pyproject.toml](mdc:pyproject.toml)

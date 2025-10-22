@@ -1,0 +1,19 @@
+---
+globs: **/*.py
+---
+# Python Style and Quality Rules
+
+Follow these conventions and checks across Python files:
+
+- Imports: standard library, third-party, local; keep sorted (ruff I)
+- Line length: 120 (see `pyproject.toml` ruff config)
+- Type hints: use explicit typing for public APIs; enable strict mypy
+- Avoid unused imports and variables; rely on ruff (`E`, `F`, `W`, `I`, `N`, `UP`, `B`, `A`, `C4`, `SIM`, `RET`)
+- Prefer early returns; avoid deep nesting; meaningful variable names
+- Do not catch broad exceptions; only handle expected errors meaningfully
+- Keep comments focused on rationale or tricky edge cases
+
+References:
+- Mypy config: [pyproject.toml](mdc:pyproject.toml)
+- Ruff config: [pyproject.toml](mdc:pyproject.toml)
+- Utilities style examples: [utils/formatter.py](mdc:utils/formatter.py), [tools/filesystem_tools.py](mdc:tools/filesystem_tools.py)

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"C:\\Users\\Max Qian\\AppData\\Local\\Programs\\Python\\Python311\\python.exe\":*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

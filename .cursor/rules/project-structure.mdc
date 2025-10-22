@@ -1,0 +1,33 @@
+---
+alwaysApply: true
+---
+# Project Structure and Entry Points
+
+This repository is organized as a learning project for PydanticAI. Key entry points and directories:
+
+- `main.py`: simple launcher or scratchpad
+- `code_agent/`: advanced code analysis agent package
+  - Entry points: `code_agent/core/agent.py`, `code_agent/ui/runner.py`
+  - Config: `code_agent/config/mcp.py`, `code_agent/config/logging.py`
+  - Tools: `code_agent/tools/toolkit.py`, `code_agent/tools/analyzer.py`, `code_agent/tools/generator.py`, `code_agent/tools/refactoring.py`
+  - Docs: `code_agent/docs/README.md`, `code_agent/README.md`
+  - Tests: `code_agent/tests/`
+- `tools/`: reusable tools for bash, filesystem, file editing, planning, and code analysis
+  - `bash_tool.py`, `filesystem_tools.py`, `file_editing_toolkit.py`, `task_planning_toolkit.py`, `code_agent_toolkit.py`
+  - Docs: `tools/README_*.md`
+- `examples/`: runnable demos organized by topic
+  - `examples/basic/hello_world.py`, `examples/tools/filesystem_tools_example.py`, `examples/code_agent/code_agent_example.py`
+- `utils/`: helper utilities (`formatter.py`, `terminal_stream.py`, `check_url.py`)
+- `scripts/`: project maintenance scripts (`run_all_checks.py`, `check_circular_deps.py`)
+- `tests/`: top-level tests for tools and utils
+- `pyproject.toml`: project config (mypy, ruff, scripts)
+- `README.md`: overview, installation, quick start
+
+Use these references when navigating or asking for code:
+- Code Agent main: [code_agent/core/agent.py](mdc:code_agent/core/agent.py)
+- Terminal runner: [code_agent/ui/runner.py](mdc:code_agent/ui/runner.py)
+- Filesystem tool: [tools/filesystem_tools.py](mdc:tools/filesystem_tools.py)
+- File editing toolkit: [tools/file_editing_toolkit.py](mdc:tools/file_editing_toolkit.py)
+- Task planning toolkit: [tools/task_planning_toolkit.py](mdc:tools/task_planning_toolkit.py)
+- Bash tool: [tools/bash_tool.py](mdc:tools/bash_tool.py)
+- Examples index: [examples/tools/filesystem_tools_example.py](mdc:examples/tools/filesystem_tools_example.py), [examples/basic/hello_world.py](mdc:examples/basic/hello_world.py)

@@ -1,0 +1,121 @@
+[project]
+name = "pydantic-ai-learn"
+version = "0.1.0"
+description = "A comprehensive learning project for PydanticAI with tools, utilities, and examples"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    {name = "The Augster", email = "augster@example.com"}
+]
+keywords = ["pydantic-ai", "ai", "agents", "llm", "code-analysis", "tools"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "mcp-run-python>=0.0.21",
+    "mcp[cli]>=1.16.0",
+    "pydantic-ai>=1.0.15",
+    "tiktoken>=0.12.0",
+    "trio>=0.31.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.0",
+    "ruff>=0.1.0",
+    "pytest>=7.0",
+]
+terminal = [
+    "prompt_toolkit>=3.0.0",
+]
+all = [
+    "prompt_toolkit>=3.0.0",
+]
+
+[project.scripts]
+code-agent = "code_agent.cli:main"
+code-agent-terminal = "code_agent.ui.runner:main"
+check-circular-deps = "scripts.check_circular_deps:main"
+run-all-checks = "scripts.run_all_checks:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/pydantic-ai-learn"
+Repository = "https://github.com/yourusername/pydantic-ai-learn"
+Documentation = "https://github.com/yourusername/pydantic-ai-learn/blob/main/README.md"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_any_unimported = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+check_untyped_defs = true
+strict_equality = true
+
+# Allow missing imports for external packages
+[[tool.mypy.overrides]]
+module = "pydantic_ai.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tools.*"
+ignore_missing_imports = false
+
+[[tool.mypy.overrides]]
+module = [
+    "pydantic_graph",
+    "pydantic_graph.*",
+    "fasta2a",
+    "fasta2a.*",
+    "code_agent.terminal_ui",
+    "code_agent.terminal_ui.*",
+    "code_agent.legacy.*",
+    "tiktoken",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+check_untyped_defs = false
+allow_untyped_decorators = true
+implicit_reexport = true
+
+[[tool.mypy.overrides]]
+module = "code_agent.examples.*"
+disallow_untyped_defs = false
+check_untyped_defs = false
+allow_untyped_decorators = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "SIM", "RET"]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+# Test files intentionally import to verify they work
+"code_agent/test_imports.py" = ["F401"]
+"scripts/test_import.py" = ["F401"]
+# __init__.py has terminal UI imports at the end (after convenience functions)
+"code_agent/__init__.py" = ["E402", "F401"]
+# Example files may have unused imports for demonstration
+"examples/**/*.py" = ["F401"]
+"code_agent/examples/**/*.py" = ["F401"]
+
+[dependency-groups]
+dev = [
+    "types-pyyaml>=6.0.12.20250915",
+]

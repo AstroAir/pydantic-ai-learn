@@ -1,0 +1,24 @@
+---
+globs: tools/**
+---
+# Tools Overview and Entry Points
+
+This directory contains PydanticAI tools and utilities.
+
+Primary tools:
+- Bash: [tools/bash_tool.py](mdc:tools/bash_tool.py)
+- Filesystem: [tools/filesystem_tools.py](mdc:tools/filesystem_tools.py)
+- File editing: [tools/file_editing_toolkit.py](mdc:tools/file_editing_toolkit.py)
+- Task planning: [tools/task_planning_toolkit.py](mdc:tools/task_planning_toolkit.py)
+- Code agent toolkit: [tools/code_agent_toolkit.py](mdc:tools/code_agent_toolkit.py)
+
+Documentation:
+- Bash tool: [tools/README_BASH_TOOL.md](mdc:tools/README_BASH_TOOL.md)
+- Filesystem tools: [tools/README_FILESYSTEM_TOOLS.md](mdc:tools/README_FILESYSTEM_TOOLS.md)
+- File editing toolkit: [tools/README_FILE_EDITING_TOOLKIT.md](mdc:tools/README_FILE_EDITING_TOOLKIT.md)
+- Task planning toolkit: [tools/README_TASK_PLANNING_TOOLKIT.md](mdc:tools/README_TASK_PLANNING_TOOLKIT.md)
+
+Conventions:
+- Pydantic models for inputs/outputs
+- Non-interactive defaults for long-running commands
+- Clear error messages and timeouts for external processes

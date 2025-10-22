@@ -1,0 +1,24 @@
+---
+globs: code_agent/**
+---
+# Code Agent Navigation Guide
+
+The Code Agent package provides autonomous code analysis and manipulation utilities.
+
+Key modules and roles:
+- Core agent: [code_agent/core/agent.py](mdc:code_agent/core/agent.py)
+- Types and configuration: [code_agent/core/types.py](mdc:code_agent/core/types.py), [code_agent/core/config.py](mdc:code_agent/core/config.py)
+- Terminal UI: [code_agent/ui/terminal.py](mdc:code_agent/ui/terminal.py), [code_agent/ui/runner.py](mdc:code_agent/ui/runner.py)
+- Tools: [code_agent/tools/toolkit.py](mdc:code_agent/tools/toolkit.py), [code_agent/tools/analyzer.py](mdc:code_agent/tools/analyzer.py), [code_agent/tools/generator.py](mdc:code_agent/tools/generator.py)
+- Adapters: [code_agent/adapters/context.py](mdc:code_agent/adapters/context.py), [code_agent/adapters/graph.py](mdc:code_agent/adapters/graph.py), [code_agent/adapters/workflow.py](mdc:code_agent/adapters/workflow.py)
+- Config: [code_agent/config/mcp.py](mdc:code_agent/config/mcp.py), [code_agent/config/logging.py](mdc:code_agent/config/logging.py)
+- Tests: [code_agent/tests/](mdc:code_agent/tests)
+
+Conventions:
+- Favor strict typing; see mypy settings in [pyproject.toml](mdc:pyproject.toml)
+- Keep UI concerns in `ui/` and core logic in `core/`
+- Public APIs should be re-exported in [code_agent/__init__.py](mdc:code_agent/__init__.py)
+
+Getting started:
+- Quickstart: [code_agent/QUICKSTART.md](mdc:code_agent/QUICKSTART.md)
+- Docs index: [code_agent/docs/INDEX.md](mdc:code_agent/docs/INDEX.md)
