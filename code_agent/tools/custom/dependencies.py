@@ -20,7 +20,7 @@ import ast
 from dataclasses import dataclass, field
 from typing import Any
 
-from ...config.custom import DependencyConfig
+from ...config.tools import DependencyConfig
 
 # ============================================================================
 # Result Types

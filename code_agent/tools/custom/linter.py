@@ -23,7 +23,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from ...config.custom import LinterConfig, LintSeverity
+from ...config.tools import LinterConfig, LintSeverity
 
 # ============================================================================
 # Result Types

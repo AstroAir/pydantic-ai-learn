@@ -1,7 +1,7 @@
 """
-Advanced PydanticAI Framework Tests
+PydanticAI Context Tests
 
-Advanced test scenarios for PydanticAI integration:
+Test scenarios for PydanticAI RunContext integration:
 - RunContext usage and management
 - Tool execution with context
 - Streaming response handling

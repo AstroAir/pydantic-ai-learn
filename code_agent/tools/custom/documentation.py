@@ -20,7 +20,7 @@ import ast
 from dataclasses import dataclass, field
 from typing import Any
 
-from ...config.custom import DocumentationConfig
+from ...config.tools import DocumentationConfig
 
 # ============================================================================
 # Result Types

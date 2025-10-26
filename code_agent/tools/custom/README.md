@@ -154,7 +154,7 @@ for missing in result.missing:
 All tools support custom configuration:
 
 ```python
-from code_agent.config.custom import (
+from code_agent.config.tools import (
     FormatterConfig,
     LinterConfig,
     DependencyConfig,
@@ -317,15 +317,15 @@ See the individual tool modules for detailed API documentation:
 
 ## Examples
 
-See `code_agent/examples/custom_workflows.py` for complete examples.
+See `code_agent/examples/quality_tools.py` for complete examples.
 
 ## Testing
 
 Run tests for custom tools:
 
 ```bash
-# Test custom tools
-pytest tests/code_agent/test_custom_tools.py -v
+# Test quality tools
+pytest tests/code_agent/test_quality_tools.py -v
 
 # Test workflows
 pytest tests/code_agent/test_workflows.py -v

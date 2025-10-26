@@ -334,7 +334,7 @@ def process(data):
 def main() -> None:
     """Run all examples."""
     print("\n" + "=" * 60)
-    print("Custom Workflows Examples")
+    print("Quality Tools Examples")
     print("=" * 60)
 
     try:

@@ -9,7 +9,7 @@ Python Version: 3.11+
 
 from __future__ import annotations
 
-from code_agent.config.custom import QualityWorkflowConfig
+from code_agent.config.tools import QualityWorkflowConfig
 from code_agent.workflows import (
     QualityReport,
     QualityWorkflow,

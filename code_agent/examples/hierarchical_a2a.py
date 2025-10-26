@@ -1,7 +1,7 @@
 """
-Enhanced Hierarchical Agent with A2A Communication Example
+Hierarchical Agent with A2A Communication Example
 
-Demonstrates the enhanced sub-agent functionality and A2A protocol integration.
+Demonstrates the sub-agent functionality and A2A protocol integration.
 
 Features demonstrated:
 - Creating specialized sub-agents with specific capabilities

@@ -20,7 +20,7 @@ import ast
 import re
 from collections.abc import Callable
 
-from ...config.custom import DocumentationConfig
+from ...config.tools import DocumentationConfig
 
 # ============================================================================
 # Naming Convention Validator

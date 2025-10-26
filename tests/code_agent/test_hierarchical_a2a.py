@@ -1,7 +1,7 @@
 """
-Comprehensive Tests for Enhanced Hierarchical Agent and A2A Integration
+Comprehensive Tests for Hierarchical Agent and A2A Integration
 
-Tests the new features:
+Tests the features:
 - Sub-agent functionality
 - A2A protocol integration
 - Service discovery

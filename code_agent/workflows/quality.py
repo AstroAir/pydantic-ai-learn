@@ -20,7 +20,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from ..config.custom import QualityWorkflowConfig
+from ..config.tools import QualityWorkflowConfig
 from ..tools.analyzer import CodeAnalyzer
 from ..tools.custom.dependencies import DependencyAnalyzer
 from ..tools.custom.documentation import DocumentationAnalyzer

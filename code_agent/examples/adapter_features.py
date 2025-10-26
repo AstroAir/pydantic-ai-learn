@@ -1,7 +1,7 @@
 """
-Advanced Features Examples
+Adapter Features Examples
 
-Demonstrates advanced features of the code agent.
+Demonstrates adapter features of the code agent.
 
 Author: The Augster
 Python Version: 3.12+

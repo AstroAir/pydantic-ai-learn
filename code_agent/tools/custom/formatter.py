@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from ...config.custom import FormatterBackend, FormatterConfig
+from ...config.tools import FormatterBackend, FormatterConfig
 
 # ============================================================================
 # Result Types

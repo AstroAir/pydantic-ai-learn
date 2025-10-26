@@ -1,5 +1,5 @@
 """
-Tests for Custom Tools
+Tests for Quality Tools
 
 Tests for CodeFormatter, CodeLinter, DependencyAnalyzer, and DocumentationAnalyzer.
 
@@ -9,7 +9,7 @@ Python Version: 3.11+
 
 from __future__ import annotations
 
-from code_agent.config.custom import (
+from code_agent.config.tools import (
     DependencyConfig,
     DocumentationConfig,
     FormatterConfig,
