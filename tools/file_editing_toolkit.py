@@ -662,8 +662,11 @@ def write_file(input_params: WriteInput, state: FileEditState) -> str:
     """
     file_path = validate_absolute_path(input_params.file_path)
 
+    # Check if file exists before writing (to determine action message)
+    file_existed = file_path.exists()
+
     # If file exists, it must have been read first
-    if file_path.exists() and not state.was_read(str(file_path)):
+    if file_existed and not state.was_read(str(file_path)):
         raise FileNotReadError(
             f"Existing file must be read before overwriting: {file_path}\n"
             f"Please read the file first to ensure you understand what you're replacing."
@@ -676,7 +679,7 @@ def write_file(input_params: WriteInput, state: FileEditState) -> str:
         # Mark as read since we just wrote it
         state.mark_as_read(str(file_path))
 
-        action = "Overwritten" if file_path.exists() else "Created"
+        action = "Overwritten" if file_existed else "Created"
         return f"{action} file: {file_path}\nContent length: {len(input_params.content)} characters"
 
     except Exception as e:

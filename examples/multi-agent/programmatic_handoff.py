@@ -33,7 +33,7 @@ flight_search_agent = Agent[None, FlightDetails | Failed](
 )
 
 
-@flight_search_agent.tool
+@flight_search_agent.tool  # type: ignore[misc]
 async def flight_search(ctx: RunContext[None], origin: str, destination: str) -> FlightDetails | None:
     # in reality, this would call a flight search API or
     # use a browser to scrape a flight search website
@@ -43,7 +43,7 @@ async def flight_search(ctx: RunContext[None], origin: str, destination: str) ->
 usage_limits = UsageLimits(request_limit=15)
 
 
-async def find_flight(usage: RunUsage) -> FlightDetails | None:  # noqa: RET503
+async def find_flight(usage: RunUsage) -> FlightDetails | None:
     message_history: list[ModelMessage] | None = None
     for _ in range(3):
         prompt = Prompt.ask(
@@ -58,6 +58,7 @@ async def find_flight(usage: RunUsage) -> FlightDetails | None:  # noqa: RET503
         if isinstance(result.output, FlightDetails):
             return result.output
         message_history = result.all_messages(output_tool_return_content="Please try again.")
+    return None
 
 
 class SeatPreference(BaseModel):

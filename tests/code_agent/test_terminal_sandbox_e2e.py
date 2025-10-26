@@ -411,6 +411,7 @@ def test_statistics_collection(reporter: TestReporter) -> None:
 # ============================================================================
 
 
+@pytest.mark.asyncio
 async def test_streaming_output(reporter: TestReporter) -> None:
     """Test streaming stdout output."""
     print_section("PHASE 4.1: Streaming Output")
@@ -432,6 +433,7 @@ async def test_streaming_output(reporter: TestReporter) -> None:
         reporter.test_failed("Streaming output", str(e))
 
 
+@pytest.mark.asyncio
 async def test_output_callbacks(reporter: TestReporter) -> None:
     """Test output callbacks."""
     print_section("PHASE 4.2: Output Callbacks")
@@ -454,6 +456,7 @@ async def test_output_callbacks(reporter: TestReporter) -> None:
         reporter.test_failed("Output callbacks", str(e))
 
 
+@pytest.mark.asyncio
 async def test_session_state_tracking(reporter: TestReporter) -> None:
     """Test session state tracking."""
     print_section("PHASE 4.3: Session State Tracking")
@@ -476,6 +479,7 @@ async def test_session_state_tracking(reporter: TestReporter) -> None:
         reporter.test_failed("Session state tracking", str(e))
 
 
+@pytest.mark.asyncio
 async def test_error_callbacks(reporter: TestReporter) -> None:
     """Test error callbacks."""
     print_section("PHASE 4.4: Error Callbacks")
@@ -505,6 +509,7 @@ async def test_error_callbacks(reporter: TestReporter) -> None:
 # ============================================================================
 
 
+@pytest.mark.asyncio
 async def test_multiple_sessions(reporter: TestReporter) -> None:
     """Test creating multiple concurrent sessions."""
     print_section("PHASE 5.1: Multiple Concurrent Sessions")
@@ -527,6 +532,7 @@ async def test_multiple_sessions(reporter: TestReporter) -> None:
         reporter.test_failed("Multiple concurrent sessions", str(e))
 
 
+@pytest.mark.asyncio
 async def test_session_listing(reporter: TestReporter) -> None:
     """Test session listing."""
     print_section("PHASE 5.2: Session Listing")
@@ -548,6 +554,7 @@ async def test_session_listing(reporter: TestReporter) -> None:
         reporter.test_failed("Session listing", str(e))
 
 
+@pytest.mark.asyncio
 async def test_session_statistics(reporter: TestReporter) -> None:
     """Test session statistics."""
     print_section("PHASE 5.3: Session Statistics")
@@ -570,6 +577,7 @@ async def test_session_statistics(reporter: TestReporter) -> None:
         reporter.test_failed("Session statistics", str(e))
 
 
+@pytest.mark.asyncio
 async def test_session_cleanup(reporter: TestReporter) -> None:
     """Test session cleanup."""
     print_section("PHASE 5.4: Session Cleanup")
@@ -853,6 +861,7 @@ class TestTerminalSandboxE2E:
         test_imports(reporter)
         assert reporter.failed == 0, f"Import tests failed: {reporter.errors}"
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Terminal sandbox requires bash on Windows")
     def test_sandbox_basic_execution(self) -> None:
         """Test basic sandbox command execution."""
         reporter = TestReporter()
@@ -874,6 +883,7 @@ class TestTerminalSandboxE2E:
         test_filesystem_restrictions(reporter)
         assert reporter.failed == 0, f"Security feature tests failed: {reporter.errors}"
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Terminal sandbox requires bash on Windows")
     def test_sandbox_resource_limits(self) -> None:
         """Test resource limits."""
         reporter = TestReporter()
@@ -881,6 +891,7 @@ class TestTerminalSandboxE2E:
         test_rate_limiting(reporter)
         assert reporter.failed == 0, f"Resource limit tests failed: {reporter.errors}"
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Terminal sandbox requires bash on Windows")
     def test_sandbox_monitoring(self) -> None:
         """Test monitoring features."""
         reporter = TestReporter()
@@ -888,6 +899,7 @@ class TestTerminalSandboxE2E:
         test_statistics_collection(reporter)
         assert reporter.failed == 0, f"Monitoring tests failed: {reporter.errors}"
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Terminal sandbox requires bash on Windows")
     @pytest.mark.asyncio
     async def test_realtime_sessions(self) -> None:
         """Test real-time session features."""
@@ -898,6 +910,7 @@ class TestTerminalSandboxE2E:
         await test_error_callbacks(reporter)
         assert reporter.failed == 0, f"Real-time session tests failed: {reporter.errors}"
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Terminal sandbox requires bash on Windows")
     @pytest.mark.asyncio
     async def test_session_management(self) -> None:
         """Test session management features."""
@@ -917,6 +930,7 @@ class TestTerminalSandboxE2E:
         test_configuration_modification(reporter)
         assert reporter.failed == 0, f"Configuration tests failed: {reporter.errors}"
 
+    @pytest.mark.skipif(sys.platform == "win32", reason="Terminal sandbox requires bash on Windows")
     def test_integration_workflows(self) -> None:
         """Test integration workflows."""
         reporter = TestReporter()

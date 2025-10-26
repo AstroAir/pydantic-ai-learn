@@ -10,16 +10,20 @@ Exports:
     - AdvancedInputHandler: Advanced input handling with history and completion
     - TerminalSessionManager: Session persistence and management
     - EnhancedStreamingDisplay: Enhanced streaming visualization
+    - PromptLibrary: Prompt template library management
+    - ConversationContextManager: Conversation history and context management
 """
 
 from __future__ import annotations
 
+from .context_manager import ConversationContextManager, ConversationMessage, FileAttachment
 from .input_handler import (
     PROMPT_TOOLKIT_AVAILABLE,
     AdvancedInputHandler,
     CommandCompleter,
     InputValidator,
 )
+from .prompt_library import PromptLibrary
 from .runner import run_terminal
 from .session_manager import (
     SessionData,
@@ -64,4 +68,10 @@ __all__ = [
     "MultiProgressTracker",
     "get_terminal_size",
     "is_terminal_wide",
+    # Prompt library
+    "PromptLibrary",
+    # Context management
+    "ConversationContextManager",
+    "ConversationMessage",
+    "FileAttachment",
 ]

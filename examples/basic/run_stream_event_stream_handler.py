@@ -43,7 +43,7 @@ async def weather_forecast(
 output_messages: list[str] = []
 
 
-async def handle_event(event: AgentStreamEvent):
+async def handle_event(event: AgentStreamEvent) -> None:
     if isinstance(event, PartStartEvent):
         output_messages.append(f"[Request] Starting part {event.index}: {event.part!r}")
     elif isinstance(event, PartDeltaEvent):
@@ -67,12 +67,12 @@ async def handle_event(event: AgentStreamEvent):
 async def event_stream_handler(
     ctx: RunContext,
     event_stream: AsyncIterable[AgentStreamEvent],
-):
+) -> None:
     async for event in event_stream:
         await handle_event(event)
 
 
-async def main():
+async def main() -> None:
     user_prompt = "What will the weather be like in Paris on 2025/10/12?"
 
     async with weather_agent.run_stream(user_prompt, event_stream_handler=event_stream_handler) as run:

@@ -89,10 +89,11 @@ class Evaluate(BaseNode[QuestionState, None, str]):
         ctx: GraphRunContext[QuestionState],
     ) -> Annotated[End[str], Edge(label="success")] | "Reprimand":
         assert ctx.state.question is not None
-        from pydantic_ai.messages import format_as_xml  # noqa: F821
+        # Format question and answer as structured text
+        formatted_input = f"<question>{ctx.state.question}</question><answer>{self.answer}</answer>"
 
         result = await evaluate_agent.run(
-            format_as_xml({"question": ctx.state.question, "answer": self.answer}),
+            formatted_input,
             message_history=ctx.state.evaluate_agent_messages,
         )
         ctx.state.evaluate_agent_messages += result.new_messages()

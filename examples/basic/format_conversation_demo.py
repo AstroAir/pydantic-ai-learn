@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspa
 from utils.formatter import ConversationFormatter, _make_wrap
 
 
-def _wrap_messages(messages: list[dict[str, Any]]):
+def _wrap_messages(messages: list[dict[str, Any]]) -> list[Any]:
     """Wrap dict messages so their types are "ModelRequest"/"ModelResponse" for the formatter.
 
     The helper `_make_wrap` creates dynamic objects whose type name matches
@@ -43,7 +43,7 @@ def _wrap_messages(messages: list[dict[str, Any]]):
     return wrapped
 
 
-def build_demo_messages():
+def build_demo_messages() -> list[dict[str, Any]]:
     now = datetime.now(UTC)
     messages: list[dict[str, Any]] = [
         {
@@ -83,7 +83,7 @@ def build_demo_messages():
     return _wrap_messages(messages)
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Format a demo conversation")
     parser.add_argument("--width", type=int, default=80, help="Output width")
     parser.add_argument("--indent", type=int, default=2, help="Indent size")
@@ -106,7 +106,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_args()
 
     fmt = ConversationFormatter(

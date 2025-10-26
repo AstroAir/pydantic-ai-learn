@@ -13,7 +13,7 @@ model = AnthropicModel(
 agent = Agent(model)
 
 
-async def main():
+async def main() -> None:
     async with agent.iter("What is the capital of France?") as agent_run:
         node = agent_run.next_node
 

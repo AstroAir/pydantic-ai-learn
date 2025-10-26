@@ -22,7 +22,7 @@ print(f"PowerShell path: {powershell_path}")
 
 try:
     # Test async mode (recommended for PowerShell)
-    async def test_async():
+    async def test_async() -> bool:
         print("\nTesting async mode with PowerShell commands...")
         async with BashTool(shell_path=powershell_path) as bash:
             # Use PowerShell commands

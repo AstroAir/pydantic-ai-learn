@@ -188,7 +188,7 @@ class CodeAgent:
         if FILE_EDITING_AVAILABLE:
             self._register_file_editing_tools()
 
-    def _register_code_tools(self):
+    def _register_code_tools(self) -> None:
         """Register code analysis and manipulation tools."""
 
         @self.agent.tool
@@ -310,7 +310,7 @@ class CodeAgent:
                 ctx.deps,
             )
 
-    def _register_task_planning_tools(self):
+    def _register_task_planning_tools(self) -> None:
         """Register task planning tools."""
         if not TASK_PLANNING_AVAILABLE:
             return
@@ -337,15 +337,100 @@ class CodeAgent:
             )
             return todo_write(TodoWriteInput(todos=[todo_item]), ctx.deps.task_state)
 
-    def _register_filesystem_tools(self):
+    def _register_filesystem_tools(self) -> None:
         """Register filesystem tools."""
-        # Placeholder - tools would be registered here
-        pass
+        if not FILESYSTEM_TOOLS_AVAILABLE:
+            return
 
-    def _register_file_editing_tools(self):
+        @self.agent.tool
+        def search_files(ctx: RunContext[CodeAgentState], pattern: str, path: str = ".", max_results: int = 50) -> str:
+            """
+            Search for files matching a glob pattern.
+
+            Args:
+                pattern: Glob pattern (e.g., "*.py", "**/*.js")
+                path: Directory path to search
+                max_results: Maximum results to return
+            """
+            result = glob_files(GlobInput(pattern=pattern, path=path, max_results=max_results))
+            return str(result)
+
+        @self.agent.tool
+        def search_in_files(
+            ctx: RunContext[CodeAgentState],
+            pattern: str,
+            path: str = ".",
+            ignore_case: bool = False,
+            output_mode: str = "files_with_matches",
+        ) -> str:
+            """
+            Search for text pattern in files using ripgrep.
+
+            Args:
+                pattern: Search pattern
+                path: Directory path to search
+                ignore_case: Case-insensitive search
+                output_mode: Output mode (files_with_matches, content, count)
+            """
+            return grep_search(
+                GrepInput(pattern=pattern, path=path, ignore_case=ignore_case, output_mode=output_mode)  # type: ignore
+            )
+
+        @self.agent.tool
+        def list_directory(ctx: RunContext[CodeAgentState], path: str, ignore: list[str] | None = None) -> str:
+            """
+            List directory contents.
+
+            Args:
+                path: Directory path
+                ignore: Patterns to ignore
+            """
+            result = ls_directory(LSInput(path=path, ignore=ignore))
+            return str(result)
+
+    def _register_file_editing_tools(self) -> None:
         """Register file editing tools."""
-        # Placeholder - tools would be registered here
-        pass
+        if not FILE_EDITING_AVAILABLE:
+            return
+
+        @self.agent.tool
+        def edit_code_file(
+            ctx: RunContext[CodeAgentState],
+            file_path: str,
+            old_string: str,
+            new_string: str,
+            replace_all: bool = False,
+        ) -> str:
+            """
+            Edit a file by replacing text.
+
+            Args:
+                file_path: Path to file
+                old_string: Text to replace
+                new_string: Replacement text
+                replace_all: Replace all occurrences
+            """
+            if ctx.deps.edit_state is None:
+                ctx.deps.edit_state = FileEditState()
+
+            return edit_file(
+                EditInput(file_path=file_path, old_string=old_string, new_string=new_string, replace_all=replace_all),
+                ctx.deps.edit_state,
+            )
+
+        @self.agent.tool
+        def create_file(ctx: RunContext[CodeAgentState], file_path: str, content: str) -> str:
+            """
+            Create a new file.
+
+            Args:
+                file_path: Path for new file
+                content: File content
+            """
+            if ctx.deps.edit_state is None:
+                ctx.deps.edit_state = FileEditState()
+
+            return write_file(WriteInput(file_path=file_path, content=content), ctx.deps.edit_state)
 
     def run_sync(self, prompt: str) -> Any:
         """

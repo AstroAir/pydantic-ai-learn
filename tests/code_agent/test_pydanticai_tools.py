@@ -18,8 +18,9 @@ from __future__ import annotations
 from typing import Any
 
 from pydantic import BaseModel
+from pydantic_ai import RunContext
 
-from code_agent.core import CodeAgent
+from code_agent.core import CodeAgent, CodeAgentState
 
 
 class AnalysisResult(BaseModel):
@@ -420,7 +421,7 @@ class TestPydanticAIToolAdvanced:
             items: list[str]
 
         @agent.agent.tool
-        def nested_tool(code: str) -> NestedModel:
+        def nested_tool(ctx: RunContext[CodeAgentState], code: str) -> NestedModel:
             """Tool returning nested model."""
             return NestedModel(
                 name="result",
@@ -434,7 +435,7 @@ class TestPydanticAIToolAdvanced:
         agent = CodeAgent()
 
         @agent.agent.tool
-        def generic_tool(items: list[str]) -> dict[str, list[str]]:
+        def generic_tool(ctx: RunContext[CodeAgentState], items: list[str]) -> dict[str, list[str]]:
             """Tool with generic types."""
             return {"processed": items}
 

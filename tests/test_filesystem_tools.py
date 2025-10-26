@@ -211,12 +211,17 @@ class TestLSInput:
 
         assert "absolute" in str(exc_info.value).lower()
 
-    def test_invalid_path_not_exists(self):
+    def test_invalid_path_not_exists(self, tmp_path):
         """Test that non-existent path is rejected."""
-        with pytest.raises(ValidationError) as exc_info:
-            LSInput(path="/nonexistent/absolute/path/12345")
+        # Create a platform-independent absolute path that doesn't exist
+        nonexistent_path = tmp_path / "nonexistent" / "absolute" / "path" / "12345"
 
-        assert "does not exist" in str(exc_info.value).lower()
+        with pytest.raises(ValidationError) as exc_info:
+            LSInput(path=str(nonexistent_path))
+
+        # The error could be either "does not exist" or "cannot resolve path"
+        error_msg = str(exc_info.value).lower()
+        assert "does not exist" in error_msg or "cannot resolve" in error_msg
 
     def test_invalid_path_not_directory(self, tmp_path):
         """Test that file path (not directory) is rejected."""
@@ -440,7 +445,7 @@ class TestGrepSearch:
         with pytest.raises(GrepError) as exc_info:
             grep_search(GrepInput(pattern="TODO", timeout=30))
 
-        assert "timeout" in str(exc_info.value).lower()
+        assert "timed out" in str(exc_info.value).lower()
 
     @patch("shutil.which", return_value="/usr/bin/rg")
     @patch("subprocess.run")

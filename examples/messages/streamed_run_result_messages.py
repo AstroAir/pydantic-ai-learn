@@ -13,7 +13,7 @@ model = AnthropicModel(
 agent = Agent(model, system_prompt="Be a helpful assistant.")
 
 
-async def main():
+async def main() -> None:
     async with agent.run_stream("Tell me a joke.") as result:
         # incomplete messages before the stream finishes
         print(result.all_messages())

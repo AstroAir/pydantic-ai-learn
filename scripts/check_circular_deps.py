@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-def check_circular_imports():
+def check_circular_imports() -> bool:
     """Check for circular imports by attempting to import all modules."""
     print("Checking for circular dependencies in code_agent package...")
     print("=" * 70)

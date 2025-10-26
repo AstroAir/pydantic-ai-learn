@@ -13,7 +13,7 @@ class BookingDetails(BaseModel):
 
 
 @mcp.tool()
-async def book_table(ctx: Context) -> str:
+async def book_table(ctx: Context[BookingDetails]) -> str:
     """Book a restaurant table with user input."""
     # Ask user for booking details using Pydantic schema
     result = await ctx.elicit(message="Please provide your booking details:", schema=BookingDetails)

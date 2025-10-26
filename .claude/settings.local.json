@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(\"C:\\Users\\Max Qian\\AppData\\Local\\Programs\\Python\\Python311\\python.exe\":*)"
+      "Bash(tree:*)",
+      "Bash(awk:*)",
+      "Bash(uv run pytest:*)",
+      "Bash(python -c \"\nimport re\n\n# Test the problematic pattern\ntry:\n    pattern = re.compile(r''C:\\\\Users\\\\[^\\\\]+'')\n    print(''Pattern compiles successfully!'')\n    test_str = r''C:\\Users\\JohnDoe\\Documents''\n    result = pattern.sub(r''C:\\\\Users\\\\***USER***'', test_str)\n    print(f''Input: {test_str}'')\n    print(f''Output: {result}'')\nexcept Exception as e:\n    print(f''Error: {e}'')\n\")",
+      "Bash(uv run python:*)",
+      "Bash(pre-commit run:*)",
+      "Bash(uv run mypy:*)",
+      "Bash(pre-commit clean:*)",
+      "Bash(pre-commit install-hooks:*)"
     ],
     "deny": [],
     "ask": []

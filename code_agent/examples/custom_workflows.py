@@ -203,18 +203,18 @@ def calculate(x,y):
 
     # Run quality workflow
     print("\nRunning quality workflow...")
-    report = workflow.run(code)
+    report = workflow.run(code)  # type: ignore[arg-type]  # Legacy interface returns QualityReport
 
     print("\nWorkflow results:")
     print(f"  Success: {report.success}")
-    print(f"  Total steps: {report.summary['total_steps']}")
-    print(f"  Successful steps: {report.summary['successful_steps']}")
-    print(f"  Total errors: {report.total_errors}")
-    print(f"  Total warnings: {report.total_warnings}")
-    print(f"  Total duration: {report.total_duration:.2f}s")
+    print(f"  Total steps: {report.summary['total_steps']}")  # type: ignore[attr-defined]
+    print(f"  Successful steps: {report.summary['successful_steps']}")  # type: ignore[attr-defined]
+    print(f"  Total errors: {report.total_errors}")  # type: ignore[attr-defined]
+    print(f"  Total warnings: {report.total_warnings}")  # type: ignore[attr-defined]
+    print(f"  Total duration: {report.total_duration:.2f}s")  # type: ignore[attr-defined]
 
     print("\nSteps executed:")
-    for step in report.steps:
+    for step in report.steps:  # type: ignore[attr-defined]
         status = "✓" if step.success else "✗"
         print(f"  {status} {step.name} ({step.duration:.2f}s)")
         if step.errors:
@@ -224,9 +224,9 @@ def calculate(x,y):
             for warning in step.warnings[:2]:
                 print(f"      Warning: {warning}")
 
-    if report.recommendations:
+    if report.recommendations:  # type: ignore[attr-defined]
         print("\nRecommendations:")
-        for rec in report.recommendations[:5]:
+        for rec in report.recommendations[:5]:  # type: ignore[attr-defined]
             print(f"  - {rec}")
 
 

@@ -39,7 +39,7 @@ class SimpleTestState:
 
 
 @dataclass
-class GraphTestNode(BaseNode[GraphTestState, None, int]):  # type: ignore[misc]
+class GraphTestNode(BaseNode[GraphTestState, None, int]):
     """Graph node used for execution tests (not a pytest test class)."""
 
     async def run(self, ctx: GraphRunContext[GraphTestState]) -> GraphTestNode | End[int]:
@@ -51,7 +51,7 @@ class GraphTestNode(BaseNode[GraphTestState, None, int]):  # type: ignore[misc]
 
 
 @dataclass
-class SimpleTestNode(BaseNode[SimpleTestState, None, int]):  # type: ignore[misc]
+class SimpleTestNode(BaseNode[SimpleTestState, None, int]):
     """Simple test node for persistence testing."""
 
     async def run(self, ctx: GraphRunContext[SimpleTestState]) -> SimpleTestNode | End[int]:
@@ -182,7 +182,7 @@ async def test_graph_monitoring() -> None:
 
         if agent.state.graph_state:
             graph_id = f"test_graph_{i}"
-            agent.state.graph_state.register_graph(graph_id, graph)
+            agent.state.graph_state.register_graph(graph_id, graph)  # type: ignore[arg-type]
             agent.state.graph_state.start_execution(graph_id)
 
             await graph.run(GraphTestNode(), state=state)

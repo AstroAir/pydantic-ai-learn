@@ -20,7 +20,9 @@ from typing import Any
 from code_agent.utils.errors import CircuitBreaker, RetryStrategy
 from code_agent.utils.logging import StructuredLogger, create_logger
 
+from .privacy_filter import PrivacyFilter
 from .telemetry_config import TelemetryConfig
+from .telemetry_exporter import TelemetryExporter
 from .telemetry_types import (
     ClassificationMetric,
     CostMetric,
@@ -100,6 +102,18 @@ class TelemetryCollector:
             exponential_base=2.0,
             jitter=True,
         )
+
+        # Privacy filter
+        self._privacy_filter = PrivacyFilter()
+
+        # Telemetry exporter
+        export_config = {
+            "backends": ["json_file"] if config.file_export.enabled else [],
+            "json_file_path": str(config.file_export.output_dir / "telemetry_events.json")
+            if config.file_export.enabled
+            else "telemetry_events.json",
+        }
+        self._exporter = TelemetryExporter(export_config)
 
         # Register shutdown handler
         atexit.register(self.shutdown)
@@ -292,9 +306,7 @@ class TelemetryCollector:
 
     def _apply_privacy_filter(self, event: TelemetryEvent | dict[str, Any]) -> TelemetryEvent | dict[str, Any]:
         """Apply privacy filtering to event."""
-        # TODO: Implement privacy filtering
-        # For now, just return the event as-is
-        return event
+        return self._privacy_filter.filter_event(event)
 
     def _export_loop(self) -> None:
         """Background export loop."""
@@ -333,12 +345,24 @@ class TelemetryCollector:
 
     def _export_to_backends(self, events: list[TelemetryEvent | dict[str, Any]]) -> None:
         """Export events to all enabled backends."""
-        # TODO: Implement actual export logic
-        # For now, just log
-        self.logger.debug(f"Would export {len(events)} events to backends")
+        # Convert events to dicts
+        event_dicts: list[dict[str, Any]] = [
+            event.model_dump() if hasattr(event, "model_dump") else event  # type: ignore[misc]
+            for event in events
+        ]
 
-        with self._stats_lock:
-            self._stats.events_exported += len(events)
+        try:
+            self._exporter.export(event_dicts)
+            self.logger.debug(f"Exported {len(events)} events successfully")
+
+            with self._stats_lock:
+                self._stats.events_exported += len(events)
+
+        except Exception as e:
+            self.logger.error(f"Failed to export events: {e}", exc_info=True)
+
+            with self._stats_lock:
+                self._stats.export_failures += 1
 
     def get_stats(self) -> TelemetryCollectorStats:
         """Get collector statistics."""

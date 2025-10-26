@@ -16,7 +16,7 @@ print(result_sync.output)
 # > The capital of Italy is Rome.
 
 
-async def main():
+async def main() -> None:
     result = await agent.run("What is the capital of France?")
     print(result.output)
     # > The capital of France is Paris.

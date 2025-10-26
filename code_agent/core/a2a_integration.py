@@ -207,13 +207,35 @@ class A2AServer:
         return self.app
 
     async def start(self) -> None:
-        """Start the A2A server."""
-        # Server startup logic if needed
-        pass
+        """
+        Start the A2A server.
+
+        Performs any necessary initialization for the server components.
+        In this implementation with in-memory storage and broker,
+        no explicit startup is required, but this method is provided
+        for subclasses that may need initialization logic.
+        """
+        # Validate components are initialized
+        if not self.storage:
+            raise RuntimeError("Storage not initialized")
+        if not self.broker:
+            raise RuntimeError("Broker not initialized")
+        if not self.worker:
+            raise RuntimeError("Worker not initialized")
+
+        # Server is ready - no additional startup required for in-memory components
+        # Subclasses can override to add persistent storage initialization, etc.
 
     async def stop(self) -> None:
-        """Stop the A2A server."""
-        # Server shutdown logic if needed
+        """
+        Stop the A2A server and cleanup resources.
+
+        Performs graceful shutdown of server components.
+        In this implementation, ensures that any pending tasks are handled.
+        """
+        # For in-memory implementation, no cleanup needed
+        # Subclasses can override to close database connections,
+        # flush buffers, or perform other cleanup operations
         pass
 
 

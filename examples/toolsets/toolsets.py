@@ -2,15 +2,15 @@ from pydantic_ai import Agent, FunctionToolset
 from pydantic_ai.models.test import TestModel
 
 
-def agent_tool():
+def agent_tool() -> str:
     return "I'm registered directly on the agent"
 
 
-def extra_tool():
+def extra_tool() -> str:
     return "I'm passed as an extra tool for a specific run"
 
 
-def override_tool():
+def override_tool() -> str:
     return "I override all other tools"
 
 
@@ -22,14 +22,17 @@ test_model = TestModel()
 agent = Agent(test_model, toolsets=[agent_toolset])
 
 result = agent.run_sync("What tools are available?")
-print([t.name for t in test_model.last_model_request_parameters.function_tools])
+if test_model.last_model_request_parameters:
+    print([t.name for t in test_model.last_model_request_parameters.function_tools])
 # > ['agent_tool']
 
 result = agent.run_sync("What tools are available?", toolsets=[extra_toolset, override_toolset])
-print([t.name for t in test_model.last_model_request_parameters.function_tools])
+if test_model.last_model_request_parameters:
+    print([t.name for t in test_model.last_model_request_parameters.function_tools])
 # > ['agent_tool', 'extra_tool']
 
 with agent.override(toolsets=[override_toolset]):
     result = agent.run_sync("What tools are available?", toolsets=[extra_toolset])
-    print([t.name for t in test_model.last_model_request_parameters.function_tools])
+    if test_model.last_model_request_parameters:
+        print([t.name for t in test_model.last_model_request_parameters.function_tools])
     # > ['override_tool']

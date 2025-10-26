@@ -14,7 +14,7 @@ model = AnthropicModel(
 agent = Agent(model)
 
 
-async def main():
+async def main() -> None:
     nodes = []
     # Begin an AgentRun, which is an async-iterable over the nodes of the agent's graph
     async with agent.iter("What is the capital of France?") as agent_run:
@@ -52,7 +52,8 @@ async def main():
         End(data=FinalResult(output='The capital of France is Paris.')),
     ]
     """
-    print(agent_run.result.output)
+    if agent_run.result:
+        print(agent_run.result.output)
     # > The capital of France is Paris.
 
 

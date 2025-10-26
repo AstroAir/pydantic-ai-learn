@@ -24,7 +24,7 @@ def get_user_by_name(ctx: RunContext[DatabaseConn], name: str) -> int:
     user_id = ctx.deps.users.get(name=name)
     if user_id is None:
         raise ModelRetry(f"No user found with name {name!r}, remember to provide their full name")
-    return user_id
+    return int(user_id)
 
 
 result = agent.run_sync("Send a message to John Doe asking for coffee next week", deps=DatabaseConn())

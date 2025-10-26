@@ -17,6 +17,8 @@ Run with: pytest tests/test_bash_tool.py -v
 
 import asyncio
 import os
+import platform
+import shutil
 import sys
 
 import pytest
@@ -31,6 +33,56 @@ from tools.bash_tool import (
     run_bash_command,
     run_bash_command_async,
 )
+
+
+# Check if bash is available and working
+def _check_bash_available() -> bool:
+    """Check if a real bash shell is available and working properly."""
+    import subprocess
+
+    # Try to run a simple bash command to verify it works
+    try:
+        # First check if bash is in PATH
+        bash_path = shutil.which("bash")
+        if bash_path:
+            # Test if bash actually works
+            result = subprocess.run([bash_path, "-c", "echo test"], capture_output=True, text=True, timeout=5)
+            if result.returncode == 0 and "test" in result.stdout:
+                return True
+
+        # On Windows, check for WSL
+        if platform.system() == "Windows":
+            wsl_path = shutil.which("wsl")
+            if wsl_path:
+                # Test if WSL bash works
+                result = subprocess.run(["wsl", "bash", "-c", "echo test"], capture_output=True, text=True, timeout=5)
+                if result.returncode == 0 and "test" in result.stdout:
+                    return True
+
+            # Check for Git Bash
+            git_bash_paths = [
+                r"C:\Program Files\Git\bin\bash.exe",
+                r"C:\Program Files (x86)\Git\bin\bash.exe",
+                os.path.expanduser(r"~\AppData\Local\Programs\Git\bin\bash.exe"),
+            ]
+            for path in git_bash_paths:
+                if os.path.exists(path):
+                    try:
+                        result = subprocess.run([path, "-c", "echo test"], capture_output=True, text=True, timeout=5)
+                        if result.returncode == 0 and "test" in result.stdout:
+                            return True
+                    except Exception:
+                        continue
+    except Exception:
+        pass
+
+    return False
+
+
+BASH_AVAILABLE = _check_bash_available()
+
+# Skip marker for tests that require bash
+requires_bash = pytest.mark.skipif(not BASH_AVAILABLE, reason="Bash not available or not working on this system")
 
 # ============================================================================
 # Input Validation Tests
@@ -58,17 +110,17 @@ class TestBashCommandInput:
 
     def test_timeout_validation_too_large(self):
         """Test timeout exceeds maximum."""
-        with pytest.raises(ValueError, match="cannot exceed 600000"):
+        with pytest.raises(ValueError, match="less than or equal to 600000"):
             BashCommandInput(command="test", timeout=700000)
 
     def test_timeout_validation_zero(self):
         """Test timeout is zero."""
-        with pytest.raises(ValueError, match="greater than 0"):
+        with pytest.raises(ValueError, match="greater than or equal to 1"):
             BashCommandInput(command="test", timeout=0)
 
     def test_timeout_validation_negative(self):
         """Test timeout is negative."""
-        with pytest.raises(ValueError, match="greater than 0"):
+        with pytest.raises(ValueError, match="greater than or equal to 1"):
             BashCommandInput(command="test", timeout=-1000)
 
     def test_empty_command(self):
@@ -87,6 +139,7 @@ class TestBashCommandInput:
 # ============================================================================
 
 
+@requires_bash
 class TestSyncExecution:
     """Test synchronous command execution."""
 
@@ -151,6 +204,7 @@ class TestSyncExecution:
 # ============================================================================
 
 
+@requires_bash
 class TestAsyncExecution:
     """Test asynchronous command execution."""
 
@@ -195,6 +249,7 @@ class TestAsyncExecution:
 # ============================================================================
 
 
+@requires_bash
 class TestTimeout:
     """Test timeout handling."""
 
@@ -223,6 +278,7 @@ class TestTimeout:
 # ============================================================================
 
 
+@requires_bash
 class TestErrorHandling:
     """Test error handling."""
 
@@ -244,6 +300,7 @@ class TestErrorHandling:
 # ============================================================================
 
 
+@requires_bash
 class TestConvenienceFunctions:
     """Test convenience functions."""
 
@@ -266,6 +323,7 @@ class TestConvenienceFunctions:
 # ============================================================================
 
 
+@requires_bash
 class TestOutput:
     """Test output handling."""
 

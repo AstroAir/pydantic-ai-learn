@@ -19,7 +19,7 @@ from tools.bash_tool import (
 )
 
 
-async def test_powershell_async():
+async def test_powershell_async() -> None:
     """Test async execution with PowerShell."""
     print("Testing async PowerShell execution...")
     try:
@@ -38,7 +38,7 @@ async def test_powershell_async():
         return False
 
 
-async def test_powershell_commands():
+async def test_powershell_commands() -> bool:
     """Test various PowerShell commands."""
     print("\nTesting various PowerShell commands...")
     try:
@@ -65,7 +65,7 @@ async def test_powershell_commands():
         return False
 
 
-def main():
+def main() -> int:
     """Run Windows-specific tests."""
     print("\n" + "=" * 60)
     print("BashTool Windows/PowerShell Test")

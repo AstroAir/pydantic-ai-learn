@@ -15,7 +15,7 @@ Python Version: 3.12+
 
 from __future__ import annotations
 
-from code_agent.core import AgentConfig, CodeAgent, create_code_agent
+from code_agent.core import AgentConfig, CodeAgent, CodeAgentState, create_code_agent
 from code_agent.utils.errors import ErrorCategory, ErrorContext, ErrorSeverity
 
 
@@ -381,7 +381,7 @@ class TestPydanticAIStreamingIntegration:
         agent = CodeAgent(config)
 
         @agent.agent.tool
-        def stream_tool(ctx: RunContext, text: str) -> str:
+        def stream_tool(ctx: RunContext[CodeAgentState], text: str, /) -> str:
             """Tool for streaming."""
             return f"Streamed: {text}"
 

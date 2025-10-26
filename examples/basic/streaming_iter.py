@@ -59,7 +59,7 @@ async def weather_forecast(
 output_messages: list[str] = []
 
 
-async def main():
+async def main() -> None:
     user_prompt = "What will the weather be like in Paris on 2025/10/12?"
 
     # Begin a node-by-node, streaming iteration
@@ -105,15 +105,16 @@ async def main():
                 # A handle-response node => The model returned some data, potentially calls a tool
                 output_messages.append("=== CallToolsNode: streaming partial response & tool usage ===")
                 async with node.stream(run.ctx) as handle_stream:
-                    async for event in handle_stream:
-                        if isinstance(event, FunctionToolCallEvent):
+                    async for tool_event in handle_stream:
+                        if isinstance(tool_event, FunctionToolCallEvent):
                             output_messages.append(
-                                f"[Tools] The LLM calls tool={event.part.tool_name!r} with args={event.part.args} "
-                                f"(tool_call_id={event.part.tool_call_id!r})"
+                                f"[Tools] The LLM calls tool={tool_event.part.tool_name!r} "
+                                f"with args={tool_event.part.args} "
+                                f"(tool_call_id={tool_event.part.tool_call_id!r})"
                             )
-                        elif isinstance(event, FunctionToolResultEvent):
+                        elif isinstance(tool_event, FunctionToolResultEvent):
                             output_messages.append(
-                                f"[Tools] Tool call {event.tool_call_id!r} returned => {event.result.content}"
+                                f"[Tools] Tool call {tool_event.tool_call_id!r} returned => {tool_event.result.content}"
                             )
             elif Agent.is_end_node(node):
                 # Once an End node is reached, the agent run is complete

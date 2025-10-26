@@ -35,14 +35,14 @@ async def handle_elicitation(
         if info.get("type") == "integer":
             data[field] = int(value)
         else:
-            data[field] = value
+            data[field] = value  # type: ignore[assignment]
 
     # Confirm
     confirm = input("\nConfirm booking? (y/n/c): ").lower()
 
     if confirm == "y":
         print("Booking details:", data)
-        return ElicitResult(action="accept", content=data)
+        return ElicitResult(action="accept", content=data)  # type: ignore[arg-type]
     if confirm == "n":
         return ElicitResult(action="decline")
     return ElicitResult(action="cancel")

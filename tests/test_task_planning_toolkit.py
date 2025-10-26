@@ -14,6 +14,8 @@ Author: Task Planning Implementation
 Python Version: 3.12+
 """
 
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import pytest
 
 from tools.task_planning_toolkit import (
@@ -36,6 +38,29 @@ from tools.task_planning_toolkit import (
     validate_single_in_progress,
     validate_unique_ids,
 )
+
+# ============================================================================
+# Fixtures
+# ============================================================================
+
+
+@pytest.fixture
+def mock_agent():
+    """Mock PydanticAI Agent for testing task_launcher."""
+    with patch("pydantic_ai.Agent") as mock_agent_class:
+        # Create a mock agent instance
+        mock_instance = MagicMock()
+
+        # Mock the run method to return a mock result
+        mock_result = MagicMock()
+        mock_result.output = "Mock agent response"
+        mock_instance.run = AsyncMock(return_value=mock_result)
+
+        # Make the Agent class return our mock instance
+        mock_agent_class.return_value = mock_instance
+
+        yield mock_agent_class
+
 
 # ============================================================================
 # Test Helper Functions
@@ -365,7 +390,7 @@ def test_todo_write_updates_state():
 
 
 @pytest.mark.anyio
-async def test_task_launcher_general_purpose():
+async def test_task_launcher_general_purpose(mock_agent):
     """Test launching general-purpose subagent."""
     input_params = TaskInput(
         description="Research API",
@@ -377,10 +402,11 @@ async def test_task_launcher_general_purpose():
 
     assert "Research API" in result
     assert "general-purpose" in result
+    assert "completed successfully" in result
 
 
 @pytest.mark.anyio
-async def test_task_launcher_statusline_setup():
+async def test_task_launcher_statusline_setup(mock_agent):
     """Test launching statusline-setup subagent."""
     input_params = TaskInput(
         description="Configure status",
@@ -392,10 +418,11 @@ async def test_task_launcher_statusline_setup():
 
     assert "Configure status" in result
     assert "statusline-setup" in result
+    assert "completed successfully" in result
 
 
 @pytest.mark.anyio
-async def test_task_launcher_output_style_setup():
+async def test_task_launcher_output_style_setup(mock_agent):
     """Test launching output-style-setup subagent."""
     input_params = TaskInput(
         description="Create output style",
@@ -407,6 +434,7 @@ async def test_task_launcher_output_style_setup():
 
     assert "Create output style" in result
     assert "output-style-setup" in result
+    assert "completed successfully" in result
 
 
 # ============================================================================
@@ -524,7 +552,7 @@ def test_pydanticai_tool_availability():
 
 
 @pytest.mark.anyio
-async def test_task_launcher_error_handling():
+async def test_task_launcher_error_handling(mock_agent):
     """Test task_launcher error handling."""
     # Test with valid input but simulate potential errors
     input_params = TaskInput(

@@ -11,6 +11,7 @@ Exports:
     - LogLevel, LogFormat: Logging configuration
     - create_logger: Logger factory function
     - Terminal security configuration
+    - Prompt configuration and templates
 """
 
 from __future__ import annotations
@@ -35,6 +36,13 @@ from .logging import (
 )
 from .manager import ConfigManager, load_config
 from .mcp import MCPConfig, MCPConfigLoader, MCPTransportType
+from .prompts import (
+    PromptConfig,
+    PromptTemplate,
+    PromptVariable,
+    load_prompt_config,
+    save_prompt_config,
+)
 from .terminal_security import (
     CommandValidationConfig,
     FilesystemAccessConfig,
@@ -71,4 +79,10 @@ __all__ = [
     "FilesystemAccessConfig",
     "create_safe_terminal_config",
     "create_development_terminal_config",
+    # Prompt configuration
+    "PromptConfig",
+    "PromptTemplate",
+    "PromptVariable",
+    "load_prompt_config",
+    "save_prompt_config",
 ]

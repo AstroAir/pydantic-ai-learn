@@ -9,7 +9,7 @@ app = FastMCP()
 
 
 @app.tool()
-async def image_generator(ctx: Context, subject: str, style: str) -> str:
+async def image_generator(ctx: Context[None], subject: str, style: str) -> str:
     prompt = f"{subject=} {style=}"
     # `ctx.session.create_message` is the sampling call
     result = await ctx.session.create_message(

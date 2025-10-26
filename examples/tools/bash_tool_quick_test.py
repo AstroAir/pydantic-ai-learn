@@ -21,7 +21,7 @@ from tools.bash_tool import (
 )
 
 
-def test_sync_basic():
+def test_sync_basic() -> bool:
     """Test basic synchronous execution."""
     print("Testing synchronous execution...")
     try:
@@ -37,7 +37,7 @@ def test_sync_basic():
         return False
 
 
-def test_pydantic_validation():
+def test_pydantic_validation() -> bool:
     """Test Pydantic input validation."""
     print("Testing Pydantic validation...")
     try:
@@ -60,7 +60,7 @@ def test_pydantic_validation():
         return False
 
 
-def test_timeout():
+def test_timeout() -> bool:
     """Test timeout handling."""
     print("Testing timeout handling...")
     try:
@@ -77,7 +77,7 @@ def test_timeout():
         return False
 
 
-def test_convenience_function():
+def test_convenience_function() -> bool:
     """Test convenience function."""
     print("Testing convenience function...")
     try:
@@ -91,7 +91,7 @@ def test_convenience_function():
         return False
 
 
-async def test_async_basic():
+async def test_async_basic() -> bool:
     """Test basic async execution."""
     print("Testing async execution...")
     try:
@@ -106,7 +106,7 @@ async def test_async_basic():
         return False
 
 
-async def test_async_convenience():
+async def test_async_convenience() -> None:
     """Test async convenience function."""
     print("Testing async convenience function...")
     try:
@@ -120,7 +120,7 @@ async def test_async_convenience():
         return False
 
 
-def main():
+def main() -> int:
     """Run all validation tests."""
     print("\n" + "=" * 60)
     print("BashTool Quick Validation Test")

@@ -37,7 +37,7 @@ def run_command(name: str, command: list[str]) -> bool:
         return False
 
 
-def main():
+def main() -> int:
     """Run all quality checks."""
     print("=" * 70)
     print("CODE QUALITY ASSURANCE - COMPREHENSIVE CHECK")

@@ -364,8 +364,16 @@ class WorkflowOrchestrator:
 
         Step signature: (params: dict[str, Any], context: Any | None) -> dict[str, Any]
         """
-        if not name or not callable(func):
-            raise ValueError("Invalid step registration")
+        if not name:
+            raise ValueError(
+                "Step registration failed: 'name' parameter cannot be empty. "
+                "Provide a non-empty string identifier for the step."
+            )
+        if not callable(func):
+            raise ValueError(
+                f"Step registration failed: 'func' must be callable, got {type(func).__name__}. "
+                f"Expected a function with signature: (params: dict[str, Any], context: Any | None) -> dict[str, Any]"
+            )
         self.steps[name] = func
 
     def unregister_step(self, name: str) -> None:

@@ -100,7 +100,11 @@ class TaskDelegator:
             if not agents:
                 agents = self.registry.list_agents()
             if not agents:
-                raise ValueError("No agents available")
+                raise ValueError(
+                    "No agents available in registry. "
+                    "Please register at least one agent before delegating tasks. "
+                    "Use registry.register_agent() to add agents."
+                )
             agent = self._select_agent(agents)
 
         task = DelegatedTask(

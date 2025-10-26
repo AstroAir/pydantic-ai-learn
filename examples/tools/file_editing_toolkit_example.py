@@ -193,7 +193,7 @@ def mark_file_as_read(file_path: str) -> str:
 # ============================================================================
 
 
-def example_basic_edit():
+def example_basic_edit() -> None:
     """Example 1: Basic file editing."""
     print("\n" + "=" * 60)
     print("Example 1: Basic File Edit")
@@ -223,7 +223,7 @@ def example_basic_edit():
     print(f"\nUpdated content:\n{Path(test_file).read_text()}")
 
 
-def example_multi_edit():
+def example_multi_edit() -> None:
     """Example 2: Multiple edits atomically."""
     print("\n" + "=" * 60)
     print("Example 2: Multi-Edit (Atomic)")
@@ -257,7 +257,7 @@ def example_multi_edit():
     print(f"\nUpdated content:\n{Path(test_file).read_text()}")
 
 
-def example_write_file():
+def example_write_file() -> None:
     """Example 3: Write new file."""
     print("\n" + "=" * 60)
     print("Example 3: Write New File")

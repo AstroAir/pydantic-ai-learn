@@ -76,12 +76,12 @@ class SimplePart:
 
 @dataclass
 class SimpleRequest:
-    parts: list
+    parts: list[SimplePart]
 
 
 @dataclass
 class SimpleResponse:
-    parts: list
+    parts: list[SimplePart]
     usage: object
     model_name: str
     timestamp: datetime
@@ -110,10 +110,10 @@ try:
         timestamp: datetime
 
     class PRequest(BaseModel):
-        parts: list
+        parts: list[PPart]
 
     class PResponse(BaseModel):
-        parts: list
+        parts: list[PPart]
         usage: object
         model_name: str
         timestamp: datetime

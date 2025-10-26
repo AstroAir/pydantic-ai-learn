@@ -27,6 +27,7 @@ from ..tools.custom.documentation import DocumentationAnalyzer
 from ..tools.custom.formatter import CodeFormatter
 from ..tools.custom.linter import CodeLinter
 from ..tools.refactoring import RefactoringEngine
+from .base import BaseWorkflow, WorkflowContext, WorkflowMetadata, WorkflowResult, WorkflowStatus
 
 # ============================================================================
 # Result Types
@@ -99,20 +100,22 @@ class QualityReport:
 # ============================================================================
 
 
-class QualityWorkflow:
+class QualityWorkflow(BaseWorkflow):
     """
     Comprehensive code quality workflow.
 
     Orchestrates multiple tools to provide complete quality analysis and improvement.
     """
 
-    def __init__(self, config: QualityWorkflowConfig | None = None) -> None:
+    def __init__(self, config: QualityWorkflowConfig | None = None, workflow_id: str | None = None) -> None:
         """
         Initialize quality workflow.
 
         Args:
             config: Workflow configuration
+            workflow_id: Optional custom workflow ID
         """
+        super().__init__(workflow_id)
         self.config = config or QualityWorkflowConfig()
 
         # Initialize tools
@@ -123,9 +126,77 @@ class QualityWorkflow:
         self.dependency_analyzer = DependencyAnalyzer(self.config.dependency_config)
         self.doc_analyzer = DocumentationAnalyzer(self.config.documentation_config)
 
-    def run(self, code: str) -> QualityReport:
+    def run(self, context: WorkflowContext) -> WorkflowResult:
         """
         Run complete quality workflow.
+
+        Supports both legacy (code string) and new (WorkflowContext) interfaces.
+
+        Args:
+            context: Workflow execution context OR Python code string (legacy)
+
+        Returns:
+            WorkflowResult (or QualityReport for legacy string input)
+        """
+        # Check if called with legacy interface (code string)
+        if isinstance(context, str):
+            # Legacy interface - call run_legacy
+            return self.run_legacy(context)  # type: ignore[return-value]
+
+        # New interface (WorkflowContext)
+        return self._run_with_context(context)
+
+    def _run_with_context(self, context: WorkflowContext) -> WorkflowResult:
+        """
+        Execute workflow with context (BaseWorkflow interface).
+
+        Args:
+            context: Workflow execution context
+
+        Returns:
+            Workflow result
+        """
+        # Extract code from context
+        code = context.get_input("code", "")
+        if not code:
+            return WorkflowResult(
+                workflow_id=self.workflow_id,
+                workflow_name="QualityWorkflow",
+                status=WorkflowStatus.FAILED,
+                success=False,
+                errors=["Missing required input: code"],
+                context=context,
+            )
+
+        # Run the workflow
+        report = self.run_legacy(code)
+
+        # Convert to WorkflowResult
+        return WorkflowResult(
+            workflow_id=self.workflow_id,
+            workflow_name="QualityWorkflow",
+            status=WorkflowStatus.COMPLETED if report.success else WorkflowStatus.FAILED,
+            success=report.success,
+            outputs={
+                "final_code": report.final_code,
+                "summary": report.summary,
+                "recommendations": report.recommendations,
+                "steps": [{"name": s.name, "success": s.success} for s in report.steps],
+            },
+            errors=[e for step in report.steps for e in step.errors],
+            warnings=[w for step in report.steps for w in step.warnings],
+            metadata={
+                "total_errors": report.total_errors,
+                "total_warnings": report.total_warnings,
+                "total_duration": report.total_duration,
+                **report.metadata,
+            },
+            context=context,
+        )
+
+    def run_legacy(self, code: str) -> QualityReport:
+        """
+        Run complete quality workflow (legacy interface for backward compatibility).
 
         Args:
             code: Python code to analyze
@@ -345,3 +416,22 @@ class QualityWorkflow:
         # Format code
         format_result = self.formatter.format(code)
         return format_result.code
+
+    def get_metadata(self) -> WorkflowMetadata:
+        """Get workflow metadata."""
+        return WorkflowMetadata(
+            name="QualityWorkflow",
+            description="Comprehensive code quality analysis and improvement workflow",
+            version="1.0.0",
+            author="The Augster",
+            tags=["quality", "analysis", "linting", "formatting"],
+            capabilities=["code_analysis", "linting", "formatting", "refactoring", "documentation"],
+            required_inputs=["code"],
+            optional_inputs=[],
+            output_schema={
+                "final_code": "str",
+                "summary": "dict",
+                "recommendations": "list[str]",
+                "steps": "list[dict]",
+            },
+        )

@@ -4,7 +4,7 @@ from pydantic_ai import AgentRunResultEvent
 from run_stream_event_stream_handler import handle_event, output_messages, weather_agent
 
 
-async def main():
+async def main() -> None:
     user_prompt = "What will the weather be like in Paris on 2025/10/12?"
 
     async for event in weather_agent.run_stream_events(user_prompt):

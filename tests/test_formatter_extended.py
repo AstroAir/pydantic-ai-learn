@@ -5,7 +5,9 @@ import pytest
 
 # load formatter module by path
 spec = importlib.util.spec_from_file_location("utils.formatter", r"d:\\Project\\pydantic-ai-learn\\utils\\formatter.py")
+assert spec is not None, "Failed to load spec"
 fmt_mod = importlib.util.module_from_spec(spec)
+assert spec.loader is not None, "Loader is None"
 spec.loader.exec_module(fmt_mod)
 ConversationFormatter = fmt_mod.ConversationFormatter
 _make_wrap = getattr(fmt_mod, "_make_wrap", None)

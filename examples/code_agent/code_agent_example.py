@@ -31,7 +31,7 @@ from code_agent import CodeAgent, create_code_agent
 # ============================================================================
 
 
-def example_basic_analysis():
+def example_basic_analysis() -> None:
     """Example: Analyze code structure and metrics."""
     print("\n" + "=" * 60)
     print("Example 1: Basic Code Analysis")
@@ -52,7 +52,7 @@ def example_basic_analysis():
 # ============================================================================
 
 
-def example_pattern_detection():
+def example_pattern_detection() -> None:
     """Example: Detect code smells and anti-patterns."""
     print("\n" + "=" * 60)
     print("Example 2: Pattern Detection")
@@ -72,7 +72,7 @@ def example_pattern_detection():
 # ============================================================================
 
 
-def example_refactoring_suggestions():
+def example_refactoring_suggestions() -> None:
     """Example: Get refactoring suggestions."""
     print("\n" + "=" * 60)
     print("Example 3: Refactoring Suggestions")
@@ -92,7 +92,7 @@ def example_refactoring_suggestions():
 # ============================================================================
 
 
-def example_code_generation():
+def example_code_generation() -> None:
     """Example: Generate code from description."""
     print("\n" + "=" * 60)
     print("Example 4: Code Generation")
@@ -114,7 +114,7 @@ def example_code_generation():
 # ============================================================================
 
 
-def example_comprehensive_review():
+def example_comprehensive_review() -> None:
     """Example: Perform comprehensive code review."""
     print("\n" + "=" * 60)
     print("Example 5: Comprehensive Code Review")
@@ -141,7 +141,7 @@ def example_comprehensive_review():
 # ============================================================================
 
 
-def example_dependency_analysis():
+def example_dependency_analysis() -> None:
     """Example: Analyze code dependencies."""
     print("\n" + "=" * 60)
     print("Example 6: Dependency Analysis")
@@ -161,7 +161,7 @@ def example_dependency_analysis():
 # ============================================================================
 
 
-def example_syntax_validation():
+def example_syntax_validation() -> None:
     """Example: Validate Python syntax."""
     print("\n" + "=" * 60)
     print("Example 7: Syntax Validation")
@@ -181,7 +181,7 @@ def example_syntax_validation():
 # ============================================================================
 
 
-def example_multi_file_analysis():
+def example_multi_file_analysis() -> None:
     """Example: Analyze multiple files."""
     print("\n" + "=" * 60)
     print("Example 8: Multi-File Analysis")
@@ -207,7 +207,7 @@ def example_multi_file_analysis():
 # ============================================================================
 
 
-async def example_improvement_workflow():
+async def example_improvement_workflow() -> None:
     """Example: Complete code improvement workflow."""
     print("\n" + "=" * 60)
     print("Example 9: Code Improvement Workflow")
@@ -236,7 +236,7 @@ async def example_improvement_workflow():
 # ============================================================================
 
 
-def example_direct_tool_usage():
+def example_direct_tool_usage() -> None:
     """Example: Use code analysis tools directly."""
     print("\n" + "=" * 60)
     print("Example 10: Direct Tool Usage")
@@ -267,7 +267,7 @@ def example_direct_tool_usage():
 # ============================================================================
 
 
-def main():
+def main() -> None:
     """Run all examples."""
     print("\n" + "=" * 60)
     print("CODE AGENT EXAMPLES")

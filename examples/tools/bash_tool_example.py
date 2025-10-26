@@ -30,7 +30,7 @@ from tools.bash_tool import (
 )
 
 
-def example_basic_sync():
+def example_basic_sync() -> None:
     """Example 1: Basic synchronous command execution."""
     print("\n" + "=" * 60)
     print("Example 1: Basic Synchronous Execution")
@@ -53,7 +53,7 @@ def example_basic_sync():
         print(f"\nDirectory listing:\n{result.output}")
 
 
-def example_persistent_session():
+def example_persistent_session() -> None:
     """Example 2: Persistent session maintaining state."""
     print("\n" + "=" * 60)
     print("Example 2: Persistent Session State")
@@ -81,7 +81,7 @@ def example_persistent_session():
         print(f"After reset, MY_VAR: '{result.output.strip()}'")
 
 
-def example_timeout_handling():
+def example_timeout_handling() -> None:
     """Example 3: Timeout handling."""
     print("\n" + "=" * 60)
     print("Example 3: Timeout Handling")
@@ -103,7 +103,7 @@ def example_timeout_handling():
         print(f"Quick command succeeded: {result.output.strip()}")
 
 
-def example_error_handling():
+def example_error_handling() -> None:
     """Example 4: Error handling."""
     print("\n" + "=" * 60)
     print("Example 4: Error Handling")
@@ -121,7 +121,7 @@ def example_error_handling():
         print(f"\nSyntax error exit code: {result.exit_code}")
 
 
-async def example_async_execution():
+async def example_async_execution() -> None:
     """Example 5: Asynchronous execution."""
     print("\n" + "=" * 60)
     print("Example 5: Asynchronous Execution")
@@ -143,7 +143,7 @@ async def example_async_execution():
             print(f"  Task {i}: {result.output.strip()}")
 
 
-async def example_background_execution():
+async def example_background_execution() -> None:
     """Example 6: Background execution."""
     print("\n" + "=" * 60)
     print("Example 6: Background Execution")
@@ -170,7 +170,7 @@ async def example_background_execution():
         print(f"Background task result: {bg_result.output.strip()}")
 
 
-def example_convenience_functions():
+def example_convenience_functions() -> None:
     """Example 7: Convenience functions."""
     print("\n" + "=" * 60)
     print("Example 7: Convenience Functions")
@@ -184,7 +184,7 @@ def example_convenience_functions():
     print(f"System info: {result.output.strip()}")
 
 
-async def example_convenience_async():
+async def example_convenience_async() -> None:
     """Example 8: Async convenience functions."""
     print("\n" + "=" * 60)
     print("Example 8: Async Convenience Functions")
@@ -194,7 +194,7 @@ async def example_convenience_async():
     print(f"Current user: {result.output.strip()}")
 
 
-def example_pydantic_validation():
+def example_pydantic_validation() -> None:
     """Example 9: Pydantic input validation."""
     print("\n" + "=" * 60)
     print("Example 9: Pydantic Input Validation")
@@ -224,7 +224,7 @@ def example_pydantic_validation():
             print(f"Empty command error: {e}")
 
 
-def main():
+def main() -> None:
     """Run all examples."""
     print("\n" + "=" * 60)
     print("BashTool Examples")
